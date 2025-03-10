@@ -1,6 +1,6 @@
-const express = require('express');
-const fetch = require('node-fetch');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import axios from 'axios';
 
 const app = express();
 app.use(cors());
@@ -10,14 +10,16 @@ app.get('/tiktok/:username', async (req, res) => {
     const url = `https://www.tiktok.com/@${username}`;
 
     try {
-        const response = await fetch(url, {
-            headers: { 'User-Agent': 'Mozilla/5.0' }
+        const response = await axios.get(url, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+                'Accept-Language': 'en-US,en;q=0.9',
+            }
         });
-        if (!response.ok) throw new Error('Profile not found');
 
         res.json({ profileLink: url, message: "Success! Add scraping logic here." });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: "Failed to fetch TikTok profile. TikTok might be blocking the request." });
     }
 });
 
