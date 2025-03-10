@@ -1,0 +1,9 @@
+apt install nodejs -y
+clear
+apt install npm -y
+clear
+
+npm init -y
+npm install express node-fetch cors
+
+node server.js
